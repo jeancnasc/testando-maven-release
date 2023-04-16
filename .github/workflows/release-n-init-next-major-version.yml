@@ -43,7 +43,7 @@ jobs:
         nextIncrementalVersion=$majorNumber.$minorNumber.$nextIncrementalNumber
         echo "releaseVersion=$releaseVersion" >> "$GITHUB_ENV"
         echo "xVersion=$xVersion" >> "$GITHUB_ENV"
-        echo "xxVersion=$xVersion" >> "$GITHUB_ENV"
+        echo "xxVersion=$xxVersion" >> "$GITHUB_ENV"
         echo "nextIncrementalVersion=$nextIncrementalVersion" >> "$GITHUB_ENV"
         mvn -B release:prepare -DdevelopmentVersion=$nextMajorVersion-SNAPSHOT
         git push
