@@ -14,5 +14,6 @@ jobs:
         with:
           distribution: 'oracle'
           java-version: '17'
+          cache: 'maven'
       - name: Testando
         run: mvn -B verify

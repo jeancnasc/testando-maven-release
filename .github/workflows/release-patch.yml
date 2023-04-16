@@ -22,6 +22,7 @@ jobs:
         with:
           distribution: 'oracle'
           java-version: '17'
+          cache: 'maven'
       - name: Configura usuário do Git
         run: |
           git config user.name github-actions
