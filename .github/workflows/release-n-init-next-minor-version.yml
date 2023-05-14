@@ -1,5 +1,4 @@
-name: Create Release
-run-name: v${{ inputs.version }}
+name: Lançar versão e iniciar próxima versão menor
 
 on:
   workflow_dispatch
@@ -45,6 +44,7 @@ jobs:
         echo "xVersion=$xVersion" >> "$GITHUB_ENV"
         echo "nextIncrementalVersion=$nextIncrementalVersion" >> "$GITHUB_ENV"
         mvn -B release:prepare -DdevelopmentVersion=$nextMinorVersion-SNAPSHOT
+        mvn -B release:perform
 
     - name: Criando branch de correção
       run: |
