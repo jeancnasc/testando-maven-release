@@ -49,7 +49,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
     - run: mkdir artifacts
     - name: Construir Artefatos
-      run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$releaseVersion -DoutputDirectory=artifacts    
+      run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$releaseVersion -DoutputDirectory=artifacts
     - name: Criar Release
       id: create_release
       run: gh release create v$releaseVersion artifacts/*.jar --title=v$releaseVersion --draft --prerelease
@@ -62,5 +62,4 @@ jobs:
         mvn -B release:update-versions -DdevelopmentVersion=$nextIncrementalVersion-SNAPSHOT
         git add pom.xml
         git commit -m "release: iniciando próxima versão (v$nextIncrementalVersion-SNAPSHOT)"
-        git status
         git push origin release/v$xVersion
