@@ -3,7 +3,7 @@ name: Lançar patch
 on:
   push:
     branches:
-      - 'releases/**'
+      - 'release/**'
 
 
 jobs:
