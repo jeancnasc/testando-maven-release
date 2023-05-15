@@ -42,8 +42,8 @@ jobs:
         echo "xVersion=$xVersion" >> "$GITHUB_ENV"
         echo "nextIncrementalVersion=$nextIncrementalVersion" >> "$GITHUB_ENV"
         mvn -B release:prepare -DdevelopmentVersion=$nextMinorVersion-SNAPSHOT
-        git status
         git push
+        git push origin v$releaseVersion
         mvn -B release:perform
       env:
         GITHUB_TOKEN: ${{ github.token }}
