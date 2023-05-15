@@ -63,4 +63,4 @@ jobs:
         git add pom.xml
         git commit -m "release: iniciando próxima versão (v$nextIncrementalVersion-SNAPSHOT)"
         git status
-        git push
+        git push origin release/v$xVersion
