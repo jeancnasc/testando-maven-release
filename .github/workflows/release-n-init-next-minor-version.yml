@@ -46,7 +46,8 @@ jobs:
         echo "nextIncrementalVersion=$nextIncrementalVersion" >> "$GITHUB_ENV"
         mvn -B release:prepare -DdevelopmentVersion=$nextMinorVersion-SNAPSHOT
         mvn -B release:perform
-
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Criando branch de correção
       run: |
         git checkout tags/v$releaseVersion -b release/v$xVersion
