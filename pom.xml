@@ -4,7 +4,7 @@
     <groupId>br.com.jeancnasc.testando.maven.release</groupId>
     <artifactId>testando-maven-release</artifactId>
     <packaging>jar</packaging>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.0</version>
     <name>testando-maven-release</name>
 
     <properties>
@@ -15,7 +15,7 @@
 
     <scm>
         <developerConnection>scm:git:file:///${project.basedir}</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v1.3.0</tag>
     </scm>
     <distributionManagement>
         <repository>
