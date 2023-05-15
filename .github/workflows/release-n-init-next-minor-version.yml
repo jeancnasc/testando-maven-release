@@ -3,9 +3,7 @@ name: Lançar versão e iniciar próxima versão menor
 on:
   workflow_dispatch
 
-permissions:
-  contents: write
-  packages: write
+
   
 jobs:
   info:
@@ -14,9 +12,10 @@ jobs:
       - run: echo '${{ toJSON(github) }}'
       - run: echo '${{ toJSON(inputs) }}'
   build:
-
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
+      packages: write
     steps:
     - uses: actions/checkout@v3
     - name: Configurar JDK
@@ -48,12 +47,6 @@ jobs:
         mvn -B release:perform
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Criando branch de correção
-      run: |
-        git checkout tags/v$releaseVersion -b release/v$xVersion
-        mvn -B release:update-versions -DdevelopmentVersion=$nextIncrementalVersion-SNAPSHOT
-        git add pom.xml
-        git commit -m "release: iniciando próxima versão (v$nextIncrementalVersion-SNAPSHOT)"
     - run: mkdir artifacts
     - name: Construir Artefatos
       run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:\${project.version} -DoutputDirectory=artifacts    
@@ -62,3 +55,10 @@ jobs:
       run: gh release create v${{ github.event.inputs.version }} artifacts/*.jar --title=v${{ github.event.inputs.version }} --draft --prerelease
       env: 
         GH_TOKEN: ${{ github.token }}
+
+    - name: Criando branch de correção
+      run: |
+        git checkout tags/v$releaseVersion -b release/v$xVersion
+        mvn -B release:update-versions -DdevelopmentVersion=$nextIncrementalVersion-SNAPSHOT
+        git add pom.xml
+        git commit -m "release: iniciando próxima versão (v$nextIncrementalVersion-SNAPSHOT)"
