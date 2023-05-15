@@ -42,6 +42,7 @@ jobs:
         echo "xVersion=$xVersion" >> "$GITHUB_ENV"
         echo "nextIncrementalVersion=$nextIncrementalVersion" >> "$GITHUB_ENV"
         mvn -B release:prepare -DdevelopmentVersion=$nextMinorVersion-SNAPSHOT
+        git status
         git push
         mvn -B release:perform
       env:
@@ -61,4 +62,5 @@ jobs:
         mvn -B release:update-versions -DdevelopmentVersion=$nextIncrementalVersion-SNAPSHOT
         git add pom.xml
         git commit -m "release: iniciando próxima versão (v$nextIncrementalVersion-SNAPSHOT)"
+        git status
         git push
