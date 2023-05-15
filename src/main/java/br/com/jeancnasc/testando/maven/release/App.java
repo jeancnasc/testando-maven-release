@@ -10,7 +10,7 @@ public class App
     }
 
     public String mensagem() {
-        return "Hello World! Fix3";
+        return "Hello World!";
     }
 
 }
