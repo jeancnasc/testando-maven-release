@@ -1,13 +1,15 @@
-name: Testar
+name: Publicar versão SNAPSHOT
 
 on:
   push:
-  pull_request:
 
 jobs:
-  testing:
+  deploy-snapshot:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
     steps:
+
       - uses: actions/checkout@v3
       - name: Configurar JDK
         uses: actions/setup-java@v3
@@ -15,4 +17,6 @@ jobs:
           distribution: 'oracle'
           java-version: '17'
       - name: Testando
-        run: mvn -B verify
+        run: mvn -B deploy
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
