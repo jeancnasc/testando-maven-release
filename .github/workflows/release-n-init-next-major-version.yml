@@ -38,7 +38,7 @@ jobs:
         xVersion=$majorNumber.$minorNumber.x
         xxVersion=$majorNumber.x.x
         releaseVersion=$majorNumber.$minorNumber.$incrementalNumber
-        nextMajorVersion=nextMajorNumber.0.0
+        nextMajorVersion=$nextMajorNumber.0.0
         nextMinorVersion=$majorNumber.$nextMinorNumber.0
         nextIncrementalVersion=$majorNumber.$minorNumber.$nextIncrementalNumber
         echo "releaseVersion=$releaseVersion" >> "$GITHUB_ENV"
