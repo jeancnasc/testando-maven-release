@@ -1,4 +1,4 @@
-name: Lançar versão e iniciar próxima versão menor
+name: Lançar versão e iniciar próxima versão maior
 
 on:
   workflow_dispatch
