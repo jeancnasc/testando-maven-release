@@ -1,4 +1,4 @@
-name: Lançar versão e iniciar próxima versão menor
+name: Publicar versão e iniciar próxima versão menor
 
 on:
   workflow_dispatch
@@ -53,7 +53,7 @@ jobs:
       run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$releaseVersion -DoutputDirectory=artifacts
     - name: Criar Release
       id: create_release
-      run: gh release create v$releaseVersion artifacts/*.jar --title=v$releaseVersion --draft --prerelease
+      run: gh release create v$releaseVersion artifacts/*.jar --title=v$releaseVersion --generate-notes --verify-tag
       env: 
         GH_TOKEN: ${{ github.token }}
 
