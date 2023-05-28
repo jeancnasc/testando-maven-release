@@ -2,6 +2,9 @@ name: Publicar versão SNAPSHOT
 
 on:
   push:
+    branches:
+      - 'master'
+      - 'release/**'
 
 jobs:
   deploy-snapshot:
