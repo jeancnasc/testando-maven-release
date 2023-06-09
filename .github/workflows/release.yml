@@ -1,4 +1,4 @@
-name: Publicar versão e iniciar próxima versão menor
+name: Publicar
 
 on:
   workflow_dispatch
