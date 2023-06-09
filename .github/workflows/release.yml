@@ -15,12 +15,6 @@ jobs:
       xVersion: ${{ steps.versions.outputs.xVersion }}
     steps:
       - uses: actions/checkout@v3
-      - name: Configurar JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: '17'
-          cache: 'maven'
       - name: Preparar variáveis
         id: versions
         run: |
@@ -33,10 +27,10 @@ jobs:
           releaseVersion=$majorNumber.$minorNumber.$incrementalNumber
           nextMinorVersion=$majorNumber.$nextMinorNumber.0
           nextIncrementalVersion=$majorNumber.$minorNumber.$nextIncrementalNumber
-          echo "releaseVersion=$releaseVersion" >> "GITHUB_OUTPUT"
-          echo "xVersion=$xVersion" >> "GITHUB_OUTPUT"
-          echo "nextIncrementalVersion=$nextIncrementalVersion" >> "GITHUB_OUTPUT"
-          echo "nextMinorVersion=$nextMinorVersion" >> "GITHUB_OUTPUT"
+          echo "releaseVersion=$releaseVersion" >> "$GITHUB_OUTPUT"
+          echo "xVersion=$xVersion" >> "$GITHUB_OUTPUT"
+          echo "nextIncrementalVersion=$nextIncrementalVersion" >> "$GITHUB_OUTPUT"
+          echo "nextMinorVersion=$nextMinorVersion" >> "$GITHUB_OUTPUT"
 
   build:
     runs-on: ubuntu-latest
