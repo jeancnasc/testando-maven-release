@@ -36,10 +36,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: prepare-variables
     env:
-      RELEASE_VERSION: ${{ needs.prepare-variables.releaseVersion }}
-      NEXT_MINOR_VERSION: ${{ needs.prepare-variables.nextMinorVersion }}
-      NEXT_PATCH_VERSION: ${{ needs.prepare-variables.nextPatchVersion }}
-      X_VERSION: ${{ needs.prepare-variables.xVersion }}
+      RELEASE_VERSION: ${{ needs.prepare-variables.outputs.releaseVersion }}
+      NEXT_MINOR_VERSION: ${{ needs.prepare-variables.outputs.nextMinorVersion }}
+      NEXT_PATCH_VERSION: ${{ needs.prepare-variables.outputs.nextPatchVersion }}
+      X_VERSION: ${{ needs.prepare-variables.outputs.xVersion }}
     permissions:
       contents: write
       packages: write
@@ -88,9 +88,9 @@ jobs:
     permissions:
       contents: write
     env:
-      RELEASE_VERSION: ${{ needs.prepare-variables.releaseVersion }}
-      NEXT_PATCH_VERSION: ${{ needs.prepare-variables.nextPatchVersion }}
-      X_VERSION: ${{ needs.prepare-variables.xVersion }}
+      RELEASE_VERSION: ${{ needs.prepare-variables.outputs.releaseVersion }}
+      NEXT_PATCH_VERSION: ${{ needs.prepare-variables.outputs.nextPatchVersion }}
+      X_VERSION: ${{ needs.prepare-variables.outputs.xVersion }}
     steps:
       - name: Criando branch de correção
         if: ${{ github.ref_name == github.event.repository.default_branch }}
