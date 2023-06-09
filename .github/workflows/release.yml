@@ -14,6 +14,13 @@ jobs:
       nextPatchVersion: ${{ steps.versions.outputs.nextIncrementalVersion }}
       xVersion: ${{ steps.versions.outputs.xVersion }}
     steps:
+      - uses: actions/checkout@v3
+      - name: Configurar JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '17'
+          cache: 'maven'
       - name: Preparar variáveis
         id: versions
         run: |
