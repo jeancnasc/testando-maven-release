@@ -1,4 +1,4 @@
-name: Publicar
+name: Publicar versão de correção
 
 on:
   workflow_dispatch
