@@ -15,12 +15,6 @@ jobs:
       xVersion: ${{ steps.versions.outputs.xVersion }}
     steps:
       - uses: actions/checkout@v3
-      - name: Configurar JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: '17'
-          cache: 'maven'
       - name: Preparar variáveis
         id: versions
         run: |
@@ -98,6 +92,7 @@ jobs:
       NEXT_PATCH_VERSION: ${{ needs.prepare-variables.outputs.nextPatchVersion }}
       X_VERSION: ${{ needs.prepare-variables.outputs.xVersion }}
     steps:
+      - uses: actions/checkout@v3
       - name: Criando branch de correção
         if: ${{ github.ref_name == github.event.repository.default_branch }}
         run: |
