@@ -4,10 +4,10 @@ run-name: versions
 on:
   workflow_call:
     outputs:
-      releaseVersion: ${{ job.prepare-variables.outputs.releaseVersion }}
-      nextMinorVersion: ${{ job.prepare-variables.outputs.nextMinorVersion }}
-      nextPatchVersion: ${{ job.prepare-variables.outputs.nextIncrementalVersion }}
-      xVersion: ${{ job.prepare-variables.outputs.xVersion }}
+      releaseVersion: ${{ jobs.prepare-variables.outputs.releaseVersion }}
+      nextMinorVersion: ${{ jobs.prepare-variables.outputs.nextMinorVersion }}
+      nextPatchVersion: ${{ jobs.prepare-variables.outputs.nextIncrementalVersion }}
+      xVersion: ${{ jobs.prepare-variables.outputs.xVersion }}
 
 jobs:
   prepare-variables:
