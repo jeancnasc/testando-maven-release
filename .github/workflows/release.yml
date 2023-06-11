@@ -96,6 +96,7 @@ jobs:
       - name: Criando branch de correção
         if: ${{ github.ref_name == github.event.repository.default_branch }}
         run: |
+          git fetch
           git checkout tags/v$RELEASE_VERSION -b release/v$X_VERSION
           mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
           git add pom.xml
