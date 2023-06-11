@@ -33,6 +33,12 @@ jobs:
         run: |
           git config user.name $COMMIT_USER_NAME
           git config user.email $COMMIT_USER_EMAIL
+      - name: Generate a token
+        id: generate_token
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
       - name: Lançar versão e iniciar proxíma versão menor
         if: ${{ github.ref_name == github.event.repository.default_branch }}
         run: |
@@ -41,7 +47,7 @@ jobs:
           git push
           mvn -B release:perform
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
       - name: Lançar versão e iniciar proxíma versão de correção
         if: ${{ startsWith(github.ref_name, 'release/' )}}
         run: |
@@ -50,7 +56,7 @@ jobs:
           git push
           mvn -B release:perform
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
 
       - run: mkdir artifacts
       - name: Construir Artefatos
