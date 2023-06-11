@@ -1,0 +1,33 @@
+name: Criar branch de correção
+
+on:
+  push:
+    tags:
+      - 'v**.0'
+
+jobs:
+  prepare-variables:
+    uses: ./.github/workflows/versions.yml
+  create-patch-branch:
+    runs-on: ubuntu-latest
+    needs: [prepare-variables]
+    permissions:
+      contents: write
+    env:
+      RELEASE_VERSION: ${{ needs.prepare-variables.outputs.releaseVersion }}
+      NEXT_PATCH_VERSION: ${{ needs.prepare-variables.outputs.nextPatchVersion }}
+      X_VERSION: ${{ needs.prepare-variables.outputs.xVersion }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configura usuário do Git
+        run: |
+          git config user.name $COMMIT_USER_NAME
+          git config user.email $COMMIT_USER_EMAIL
+      - name: Criando branch de correção
+        run: |
+          git fetch
+          git checkout tags/v$RELEASE_VERSION -b release/v$X_VERSION
+          mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
+          git add pom.xml
+          git commit -m "release: iniciando próxima versão (v$NEXT_PATCH_VERSION-SNAPSHOT)"
+          git push origin release/v$X_VERSION
