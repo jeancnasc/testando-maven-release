@@ -15,6 +15,12 @@ jobs:
       xVersion: ${{ steps.versions.outputs.xVersion }}
     steps:
       - uses: actions/checkout@v3
+      - name: Configurar JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '17'
+          cache: 'maven'
       - name: Preparar variáveis
         id: versions
         run: |
@@ -76,7 +82,7 @@ jobs:
 
       - run: mkdir artifacts
       - name: Construir Artefatos
-        run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$releaseVersion -DoutputDirectory=artifacts
+        run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$RELEASE_VERSION -DoutputDirectory=artifacts
       - name: Criar Release
         id: create_release
         run: gh release create v$RELEASE_VERSION artifacts/*.jar --title=v$RELEASE_VERSION --generate-notes --verify-tag
