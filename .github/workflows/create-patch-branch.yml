@@ -32,4 +32,4 @@ jobs:
           mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
           git add pom.xml
           git commit -m "release: iniciando próxima versão (v$NEXT_PATCH_VERSION-SNAPSHOT)"
-          git push origin release/v$X_VERSION
+          git push -u origin release/v$X_VERSION
