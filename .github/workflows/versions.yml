@@ -9,7 +9,7 @@ on:
       nextMinorVersion:
         value: ${{ jobs.prepare-variables.outputs.nextMinorVersion }}
       nextPatchVersion:
-        value: ${{ jobs.prepare-variables.outputs.nextIncrementalVersion }}
+        value: ${{ jobs.prepare-variables.outputs.nextPatchVersion }}
       xVersion:
         value: ${{ jobs.prepare-variables.outputs.xVersion }}
 
