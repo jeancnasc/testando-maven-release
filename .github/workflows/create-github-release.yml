@@ -18,6 +18,7 @@ jobs:
     needs: prepare-variables
     permissions:
       contents: write
+      packages: read
     env:
       RELEASE_VERSION: ${{ github.event_name != 'workflow_dispatch' && needs.prepare-variables.outputs.releaseVersion || inputs.version }}
     steps:
