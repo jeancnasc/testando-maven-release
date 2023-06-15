@@ -29,7 +29,9 @@ jobs:
           git config user.email $COMMIT_USER_EMAIL
       - name: Criando branch de correção
         run: |
+          git fetch
+          git checkout tags/v$RELEASE_VERSION -b release/v$X_VERSION
           mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
           git add pom.xml
           git commit -m "release: iniciando próxima versão (v$NEXT_PATCH_VERSION-SNAPSHOT)"
-          git push -u origin release/v$X_VERSION
+          git push origin release/v$X_VERSION
