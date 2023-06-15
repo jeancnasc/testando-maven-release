@@ -31,6 +31,8 @@ jobs:
       - run: mkdir artifacts
       - name: Construir Artefatos
         run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$RELEASE_VERSION -DoutputDirectory=artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Criar Release
         id: create_release
         run: gh release create v$RELEASE_VERSION artifacts/*.jar --title=v$RELEASE_VERSION --generate-notes --verify-tag
