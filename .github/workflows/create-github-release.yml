@@ -22,6 +22,12 @@ jobs:
       RELEASE_VERSION: ${{ github.event_name != 'workflow_dispatch' && needs.prepare-variables.outputs.releaseVersion || inputs.version }}
     steps:
       - uses: actions/checkout@v3
+      - name: Configurar JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '17'
+          cache: 'maven'
       - run: mkdir artifacts
       - name: Construir Artefatos
         run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$RELEASE_VERSION -DoutputDirectory=artifacts
