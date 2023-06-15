@@ -18,7 +18,6 @@ jobs:
     needs: prepare-variables
     permissions:
       contents: write
-      packages: read
     env:
       RELEASE_VERSION: ${{ github.event_name != 'workflow_dispatch' && needs.prepare-variables.outputs.releaseVersion || inputs.version }}
     steps:
@@ -33,7 +32,7 @@ jobs:
       - name: Construir Artefatos
         run: mvn dependency:get -Dartifact=\${project.groupId}:\${project.artifactId}:$RELEASE_VERSION -DoutputDirectory=artifacts -DremoteRepositories=github::default::https://maven.pkg.github.com/${{ github.repository }}
         env:
-          GH_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Criar Release
         id: create_release
         run: gh release create v$RELEASE_VERSION artifacts/*.jar --title=v$RELEASE_VERSION --generate-notes --verify-tag
