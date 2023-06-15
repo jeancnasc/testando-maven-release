@@ -1,13 +1,10 @@
 name: Criar branch de correção
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v**.0'
-
-env:
-  COMMIT_USER_NAME: github-actions
-  COMMIT_USER_EMAIL: noreply@github.com
 
 jobs:
   prepare-variables:
@@ -25,8 +22,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Configura usuário do Git
         run: |
-          git config user.name $COMMIT_USER_NAME
-          git config user.email $COMMIT_USER_EMAIL
+          git config user.name ${{ vars.COMMIT_USER_NAME }}
+          git config user.email ${{ vars.COMMIT_USER_EMAIL }}
       - name: Criando branch de correção
         run: |
           git fetch
