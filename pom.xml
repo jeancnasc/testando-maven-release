@@ -24,6 +24,13 @@
             <url>https://maven.pkg.github.com/jeancnasc/testando-maven-release</url>
         </repository>
     </distributionManagement>
+    <repositories>
+        <repository>
+            <id>github</id>
+            <name>GitHub jeancnasc Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/jeancnasc/testando-maven-release</url>
+        </repository>
+    </repositories>
 
 
     <build>

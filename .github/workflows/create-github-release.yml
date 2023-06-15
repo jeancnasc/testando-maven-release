@@ -30,7 +30,7 @@ jobs:
           cache: 'maven'
       - run: mkdir artifacts
       - name: Construir Artefatos
-        run: mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$RELEASE_VERSION -DoutputDirectory=artifacts -DremoteRepositories=github::default::https://maven.pkg.github.com/${{ github.repository }}
+        run: mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$RELEASE_VERSION -DoutputDirectory=artifacts
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Criar Release
