@@ -1,0 +1,27 @@
+name: Criar Release do GitHub
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*.0'
+
+jobs:
+  prepare-variables:
+    uses: ./.github/workflows/versions.yml
+  create-patch-branch:
+    runs-on: ubuntu-latest
+    needs: [prepare-variables]
+    permissions:
+      contents: write
+    env:
+      RELEASE_VERSION: ${{ needs.prepare-variables.outputs.releaseVersion }}
+    steps:
+      - run: mkdir artifacts
+      - name: Construir Artefatos
+        run: mvn -B package --file pom.xml dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:$RELEASE_VERSION -DoutputDirectory=artifacts
+      - name: Criar Release
+        id: create_release
+        run: gh release create v$RELEASE_VERSION artifacts/*.jar --title=v$RELEASE_VERSION --generate-notes --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
