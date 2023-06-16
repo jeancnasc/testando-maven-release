@@ -23,6 +23,13 @@ jobs:
       xVersion: ${{ steps.versions.outputs.xVersion }}
     steps:
       - uses: actions/checkout@v3
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: versions-workflow
+          restore-keys: |
+            versions-workflow
       - name: Preparar variáveis
         id: versions
         run: |
