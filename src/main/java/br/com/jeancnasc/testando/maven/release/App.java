@@ -1,5 +1,6 @@
 package br.com.jeancnasc.testando.maven.release;
 
+// Uma modificação qualquer
 public class App
 {
 
