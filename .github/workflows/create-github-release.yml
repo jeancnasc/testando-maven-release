@@ -11,15 +11,15 @@ on:
       - 'v*.0'
 
 jobs:
-  prepare-variables:
-    uses: ./.github/workflows/versions.yml
+  extract-version:
+    uses: ./.github/workflows/extract-version.yml
   create-patch-branch:
     runs-on: ubuntu-latest
-    needs: prepare-variables
+    needs: extract-version
     permissions:
       contents: write
     env:
-      RELEASE_VERSION: ${{ github.event_name != 'workflow_dispatch' && needs.prepare-variables.outputs.releaseVersion || inputs.version }}
+      RELEASE_VERSION: ${{ github.event_name != 'workflow_dispatch' && needs.extract-version.outputs.releaseVersion || inputs.version }}
     steps:
       - uses: actions/checkout@v3
       - name: Configurar JDK

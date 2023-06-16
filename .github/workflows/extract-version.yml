@@ -5,16 +5,16 @@ on:
   workflow_call:
     outputs:
       releaseVersion:
-        value: ${{ jobs.prepare-variables.outputs.releaseVersion }}
+        value: ${{ jobs.extract-version.outputs.releaseVersion }}
       nextMinorVersion:
-        value: ${{ jobs.prepare-variables.outputs.nextMinorVersion }}
+        value: ${{ jobs.extract-version.outputs.nextMinorVersion }}
       nextPatchVersion:
-        value: ${{ jobs.prepare-variables.outputs.nextPatchVersion }}
+        value: ${{ jobs.extract-version.outputs.nextPatchVersion }}
       xVersion:
-        value: ${{ jobs.prepare-variables.outputs.xVersion }}
+        value: ${{ jobs.extract-version.outputs.xVersion }}
 
 jobs:
-  prepare-variables:
+  extract-version:
     runs-on: ubuntu-latest
     outputs:
       releaseVersion: ${{ steps.versions.outputs.releaseVersion }}
