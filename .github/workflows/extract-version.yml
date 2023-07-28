@@ -1,0 +1,48 @@
+name: versions
+run-name: versions
+
+on:
+  workflow_call:
+    outputs:
+      releaseVersion:
+        value: ${{ jobs.extract-version.outputs.releaseVersion }}
+      nextMinorVersion:
+        value: ${{ jobs.extract-version.outputs.nextMinorVersion }}
+      nextPatchVersion:
+        value: ${{ jobs.extract-version.outputs.nextPatchVersion }}
+      xVersion:
+        value: ${{ jobs.extract-version.outputs.xVersion }}
+
+jobs:
+  extract-version:
+    runs-on: ubuntu-latest
+    outputs:
+      releaseVersion: ${{ steps.versions.outputs.releaseVersion }}
+      nextMinorVersion: ${{ steps.versions.outputs.nextMinorVersion }}
+      nextPatchVersion: ${{ steps.versions.outputs.nextIncrementalVersion }}
+      xVersion: ${{ steps.versions.outputs.xVersion }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: versions-workflow
+          restore-keys: |
+            versions-workflow
+      - name: Preparar variáveis
+        id: versions
+        run: |
+          majorNumber=$(mvn build-helper:parse-version help:evaluate -Dexpression=parsedVersion.majorVersion -q -DforceStdout)
+          minorNumber=$(mvn build-helper:parse-version help:evaluate -Dexpression=parsedVersion.minorVersion -q -DforceStdout)
+          incrementalNumber=$(mvn build-helper:parse-version help:evaluate -Dexpression=parsedVersion.incrementalVersion -q -DforceStdout)
+          nextMinorNumber=$(mvn build-helper:parse-version help:evaluate -Dexpression=parsedVersion.nextMinorVersion -q -DforceStdout)
+          nextIncrementalNumber=$(mvn build-helper:parse-version help:evaluate -Dexpression=parsedVersion.nextIncrementalVersion -q -DforceStdout)
+          xVersion=$majorNumber.$minorNumber.x
+          releaseVersion=$majorNumber.$minorNumber.$incrementalNumber
+          nextMinorVersion=$majorNumber.$nextMinorNumber.0
+          nextIncrementalVersion=$majorNumber.$minorNumber.$nextIncrementalNumber
+          echo "releaseVersion=$releaseVersion" >> "$GITHUB_OUTPUT"
+          echo "xVersion=$xVersion" >> "$GITHUB_OUTPUT"
+          echo "nextIncrementalVersion=$nextIncrementalVersion" >> "$GITHUB_OUTPUT"
+          echo "nextMinorVersion=$nextMinorVersion" >> "$GITHUB_OUTPUT"

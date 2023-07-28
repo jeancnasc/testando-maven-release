@@ -1,0 +1,34 @@
+name: Criar branch de correção
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v**.0'
+
+jobs:
+  extract-version:
+    uses: ./.github/workflows/extract-version.yml
+  create-patch-branch:
+    runs-on: ubuntu-latest
+    needs: [extract-version]
+    permissions:
+      contents: write
+    env:
+      RELEASE_VERSION: ${{ needs.extract-version.outputs.releaseVersion }}
+      NEXT_PATCH_VERSION: ${{ needs.extract-version.outputs.nextPatchVersion }}
+      X_VERSION: ${{ needs.extract-version.outputs.xVersion }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Configura usuário do Git
+        run: |
+          git config user.name ${{ vars.COMMIT_USER_NAME }}
+          git config user.email ${{ vars.COMMIT_USER_EMAIL }}
+      - name: Criando branch de correção
+        run: |
+          git fetch
+          git checkout tags/v$RELEASE_VERSION -b release/v$X_VERSION
+          mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
+          git add pom.xml
+          git commit -m "release: iniciando próxima versão (v$NEXT_PATCH_VERSION-SNAPSHOT)"
+          git push origin release/v$X_VERSION
