@@ -48,7 +48,6 @@
                     <tagNameFormat>v@{project.version}</tagNameFormat>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
-                    <lineSeparator>system</lineSeparator>
                     <scmCommentPrefix>release:</scmCommentPrefix>
                     <scmReleaseCommitComment>@{prefix} lançando versão @{releaseLabel}</scmReleaseCommitComment>
                     <scmDevelopmentCommitComment>@{prefix} iniciando próxima versão (v${developmentVersion})</scmDevelopmentCommitComment>
