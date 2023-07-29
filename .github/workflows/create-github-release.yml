@@ -6,9 +6,12 @@ on:
       version:
         description: "version"
         type: string
+  workflow_call:
   push:
     tags:
       - 'v*.0'
+  
+
 
 jobs:
   extract-version:
