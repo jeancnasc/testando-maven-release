@@ -55,5 +55,5 @@ jobs:
 
       - name: Push
         run: |
-          git push origin v$RELEASE_VERSION
           git push
+          git push origin v$RELEASE_VERSION
