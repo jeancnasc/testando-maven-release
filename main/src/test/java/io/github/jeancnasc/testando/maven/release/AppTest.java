@@ -1,4 +1,4 @@
-package br.com.jeancnasc.testando.maven.release;
+package io.github.jeancnasc.testando.maven.release;
 
 import org.junit.jupiter.api.Test;
 
