@@ -51,6 +51,8 @@ jobs:
           mvn -B release:prepare -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
 
       - name: Push
+        env:
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
           git push
           git push origin v$RELEASE_VERSION
