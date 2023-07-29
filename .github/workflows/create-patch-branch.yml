@@ -2,6 +2,7 @@ name: Criar branch de correção
 
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     tags:
       - 'v**.0'
