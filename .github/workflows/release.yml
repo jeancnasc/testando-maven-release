@@ -14,6 +14,8 @@ jobs:
       NEXT_MINOR_VERSION: ${{ needs.extract-version.outputs.nextMinorVersion }}
       NEXT_PATCH_VERSION: ${{ needs.extract-version.outputs.nextPatchVersion }}
       X_VERSION: ${{ needs.extract-version.outputs.xVersion }}
+    permissions:
+      contents: write
     steps:
       - name: Generate a token
         id: generate_token
