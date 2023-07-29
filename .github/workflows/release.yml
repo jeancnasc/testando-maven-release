@@ -14,9 +14,6 @@ jobs:
       NEXT_MINOR_VERSION: ${{ needs.extract-version.outputs.nextMinorVersion }}
       NEXT_PATCH_VERSION: ${{ needs.extract-version.outputs.nextPatchVersion }}
       X_VERSION: ${{ needs.extract-version.outputs.xVersion }}
-    permissions:
-      contents: write
-      packages: write
     steps:
       - name: Generate a token
         id: generate_token
@@ -24,6 +21,8 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          permissions: >-
+             {"contents": "write"}
 
       - uses: actions/checkout@v3
         env:
