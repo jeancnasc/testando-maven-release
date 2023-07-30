@@ -1,4 +1,4 @@
-name: Publicar versão SNAPSHOT
+name: Implantando versão SNAPSHOT
 
 on:
   push:

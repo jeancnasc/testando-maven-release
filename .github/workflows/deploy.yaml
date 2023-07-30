@@ -1,0 +1,25 @@
+name: Implantar
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v**.0'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+    - uses: actions/checkout@v3
+    - name: Configurar JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'oracle'
+        java-version: '17'
+        cache: 'maven'
+    - name: Testando
+      run: mvn -B release:perform -D connectionUrl=scm:git:file:///${project.basedir}
+      env:
+        GITHUB_TOKEN: ${{ github.token }} 
