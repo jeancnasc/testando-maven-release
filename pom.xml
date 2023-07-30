@@ -8,7 +8,7 @@
         <module>shared</module>
         <module>main</module>
     </modules>
-    <version>1.3.0</version>
+    <version>1.4.0-SNAPSHOT</version>
     <name>testando-maven-release</name>
 
     <properties>
@@ -19,7 +19,7 @@
 
     <scm>
         <developerConnection>scm:git:file:///${project.basedir}</developerConnection>
-        <tag>v1.3.0</tag>
+        <tag>HEAD</tag>
     </scm>
     <distributionManagement>
         <repository>
