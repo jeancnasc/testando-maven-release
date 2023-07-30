@@ -25,7 +25,7 @@ jobs:
         distribution: 'oracle'
         java-version: '17'
         cache: 'maven'
-    - name: Testando
-      run: mvn -B release:perform -D connectionUrl=scm:git:file:///${project.basedir}
+    - name: Implantando
+      run: mvn -B release:perform -D connectionUrl=scm:git:file:///\${project.basedir}
       env:
         GITHUB_TOKEN: ${{ github.token }} 
