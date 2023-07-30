@@ -14,8 +14,6 @@ jobs:
       NEXT_MINOR_VERSION: ${{ needs.extract-version.outputs.nextMinorVersion }}
       NEXT_PATCH_VERSION: ${{ needs.extract-version.outputs.nextPatchVersion }}
       X_VERSION: ${{ needs.extract-version.outputs.xVersion }}
-    permissions:
-      contents: write
     steps:
       - name: Generate a token
         id: generate_token
@@ -23,12 +21,10 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
-          permissions: >-
-             {"contents": "write"}
 
       - uses: actions/checkout@v3
-        env:
-          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+        with:
+          token: ${{ steps.generate_token.outputs.token }}
 
       - name: Configurar JDK
         uses: actions/setup-java@v3
@@ -53,8 +49,6 @@ jobs:
           mvn -B release:prepare -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
 
       - name: Push
-        env:
-          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
         run: |
           git push
           git push origin v$RELEASE_VERSION
