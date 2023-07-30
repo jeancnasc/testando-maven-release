@@ -13,8 +13,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag && inputs.tag || github.ref }}
     permissions:
       packages: write
+    
+      
     steps:
     - uses: actions/checkout@v3
       with:
@@ -25,6 +29,8 @@ jobs:
         distribution: 'oracle'
         java-version: '17'
         cache: 'maven'
+    - name: Criando arquivo Release
+      run: echo scm.tag=$TAG >> release.properties
     - name: Implantando
       run: mvn -B release:perform -DconnectionUrl=scm:git:file:///\${project.basedir}
       env:
