@@ -3,7 +3,7 @@ name: Implantar
 on:
   workflow_dispatch:
     inputs:
-      tags:
+      tag:
         required: true
         type: string
   push:
