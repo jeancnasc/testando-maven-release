@@ -32,7 +32,7 @@ jobs:
           cache: 'maven'
       - run: mkdir artifacts
       - name: Baixar Artefatos
-        run: mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outpus.version }} -DoutputDirectory=artifacts
+        run: mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outpus.substring }} -DoutputDirectory=artifacts
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Criar Release
