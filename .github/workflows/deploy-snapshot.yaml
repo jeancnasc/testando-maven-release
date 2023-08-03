@@ -1,4 +1,4 @@
-name: Implantando versão SNAPSHOT
+name: Implantar versão SNAPSHOT
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ jobs:
           distribution: 'oracle'
           java-version: '17'
           cache: 'maven'
-      - name: Testando
+      - name: Implantando
         run: mvn -B deploy
         env:
           GITHUB_TOKEN: ${{ github.token }}
