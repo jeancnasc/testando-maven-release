@@ -39,6 +39,15 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Criar Release
         id: create_release
-        run: gh release create $TAG artifacts/*.jar artifacts/*.war artifacts/*.ear artifacts/*.zip --title=$TAG --generate-notes --verify-tag
+        run: gh release create $TAG --title=$TAG --generate-notes --verify-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Anexar arquivos ao Release
+        id: upload
+        run: | 
+          find -name '*.jar' -exec gh release upload $TAG {} \; 
+          find -name '*.war' -exec gh release upload $TAG {} \; 
+          find -name '*.ear' -exec gh release upload $TAG {} \; 
+          find -name '*.zip' -exec gh release upload $TAG {} \;           
         env:
           GH_TOKEN: ${{ github.token }}
