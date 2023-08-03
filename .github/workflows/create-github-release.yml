@@ -24,6 +24,8 @@ jobs:
           value: ${{ env.TAG }}
           index_of_str: "v"
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.TAG }}
       - name: Configurar JDK
         uses: actions/setup-java@v3
         with:
