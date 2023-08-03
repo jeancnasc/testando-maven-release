@@ -11,7 +11,7 @@ on:
       - 'v*.0'
 
 jobs:
-  create-patch-branch:
+  create-github-release:
     runs-on: ubuntu-latest
     permissions:
       contents: write
