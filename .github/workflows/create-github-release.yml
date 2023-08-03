@@ -34,11 +34,11 @@ jobs:
           cache: 'maven'
       - run: mkdir artifacts
       - name: Baixar Artefatos
-        run: mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:\${project.packaging} -DoutputDirectory=artifacts
+        run: find -name 'pom.xml' -exec mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:\${project.packaging} -DoutputDirectory=$PWD/artifacts \;
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Criar Release
         id: create_release
-        run: gh release create $TAG artifacts/*.jar --title=$TAG --generate-notes --verify-tag
+        run: gh release create $TAG artifacts/*.jar artifacts/*.war artifacts/*.ear artifacts/*.zip --title=$TAG --generate-notes --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
