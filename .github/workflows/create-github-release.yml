@@ -34,7 +34,7 @@ jobs:
           cache: 'maven'
       - run: mkdir artifacts
       - name: Baixar Artefatos
-        run: find -name 'pom.xml' -exec mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:\${project.packaging} -DoutputDirectory=$PWD/artifacts \;
+        run: find -name 'pom.xml' -exec mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:\${project.packaging} -DoutputDirectory=$PWD/artifacts -f {} \;
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Criar Release
