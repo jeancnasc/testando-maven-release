@@ -2,6 +2,10 @@ name: Criar branch de correção
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        type: string
   push:
     tags:
       - 'v**.0'
@@ -15,11 +19,14 @@ jobs:
     permissions:
       contents: write
     env:
+      TAG: ${{ inputs.tag && inputs.tag || github.ref }}
       RELEASE_VERSION: ${{ needs.extract-version.outputs.releaseVersion }}
       NEXT_PATCH_VERSION: ${{ needs.extract-version.outputs.nextPatchVersion }}
       X_VERSION: ${{ needs.extract-version.outputs.xVersion }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ env.TAG }}
       - name: Configura usuário do Git
         run: |
           git config user.name ${{ vars.COMMIT_USER_NAME }}
