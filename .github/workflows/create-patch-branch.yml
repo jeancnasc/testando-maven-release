@@ -35,7 +35,7 @@ jobs:
       - name: Criando branch de correção
         run: |
           git branch release/v$X_VERSION
-      - name: Atualizando versão
+      #- name: Atualizando versão
         # env:      
         #   RELEASE_VERSION: ${{ steps.extract-version.outputs.releaseVersion }}
         #   NEXT_PATCH_VERSION: ${{ steps.extract-version.outputs.nextPatchVersion }}
