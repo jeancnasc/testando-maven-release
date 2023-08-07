@@ -52,4 +52,6 @@ jobs:
           git add */pom.xml
           git commit -m "release: iniciando próxima versão (v$NEXT_PATCH_VERSION-SNAPSHOT)"
       - name: Enviando modificações
+        env:
+          X_VERSION: ${{ steps.extract-version.outputs.xVersion }}
         run: git push origin release/v$X_VERSION
