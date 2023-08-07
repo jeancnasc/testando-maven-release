@@ -46,7 +46,7 @@ jobs:
       - name: Atualizando pasta .github
         run: |
           rm -rf .github
-          cp rf .master/.github .github
+          cp -r .master/.github .github
           git add .github/*
           git commit -m "atualizando .github a partir da master"      
       - name: Enviando modificações
