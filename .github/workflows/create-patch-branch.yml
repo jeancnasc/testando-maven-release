@@ -38,8 +38,7 @@ jobs:
           NEXT_PATCH_VERSION: ${{ steps.extract-version.outputs.nextPatchVersion }}
           X_VERSION: ${{ steps.extract-version.outputs.xVersion }}
         run: |
-          git fetch
-          git checkout tags/v$RELEASE_VERSION -b release/v$X_VERSION
+          git branch release/v$X_VERSION
           mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
           git add */pom.xml
           git commit -m "release: iniciando próxima versão (v$NEXT_PATCH_VERSION-SNAPSHOT)"
