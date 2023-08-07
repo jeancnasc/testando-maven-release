@@ -16,12 +16,17 @@ env:
 jobs:
   create-patch-branch:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
+      - name: Generate a token
+        id: generate_token
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}          
       - uses: actions/checkout@v3
         with:
           ref: ${{ env.TAG }}
+          token: ${{ steps.generate_token.outputs.token }}
       - uses: actions/checkout@v3
         with:
           ref: master
@@ -44,11 +49,5 @@ jobs:
           mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
           git add */pom.xml
           git commit -m "release: iniciando próxima versão (v$NEXT_PATCH_VERSION-SNAPSHOT)"
-      - name: Removendo pasta .github
-        run: |
-          rm -rf .github
-          cp -r .master/.github .github
-          git add .github/*
-          git commit -m "removendo .github a partir da master"
       - name: Enviando modificações
         run: git push origin release/v$X_VERSION
