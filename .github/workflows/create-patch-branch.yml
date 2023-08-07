@@ -31,6 +31,7 @@ jobs:
         with:
           ref: master
           path: .master
+          token: ${{ steps.generate_token.outputs.token }}
       - id: extract-version
         uses: ./.master/.github/actions/extract-version
       - name: Configura usuário do Git
@@ -38,13 +39,14 @@ jobs:
           git config user.name ${{ vars.COMMIT_USER_NAME }}
           git config user.email ${{ vars.COMMIT_USER_EMAIL }}
       - name: Criando branch de correção
+        env:
+          X_VERSION: ${{ steps.extract-version.outputs.xVersion }}
         run: |
           git branch release/v$X_VERSION
       - name: Atualizando versão
         env:      
           RELEASE_VERSION: ${{ steps.extract-version.outputs.releaseVersion }}
           NEXT_PATCH_VERSION: ${{ steps.extract-version.outputs.nextPatchVersion }}
-          X_VERSION: ${{ steps.extract-version.outputs.xVersion }}
         run: |
           mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
           git add */pom.xml
