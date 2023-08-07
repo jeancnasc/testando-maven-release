@@ -42,7 +42,7 @@ jobs:
         env:
           X_VERSION: ${{ steps.extract-version.outputs.xVersion }}
         run: |
-          git branch release/v$X_VERSION
+          git checkout -b release/v$X_VERSION
       - name: Atualizando versão
         env:      
           RELEASE_VERSION: ${{ steps.extract-version.outputs.releaseVersion }}
