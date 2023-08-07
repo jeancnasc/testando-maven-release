@@ -22,10 +22,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ env.TAG }}
-      # - uses: actions/checkout@v3
-      #   with:
-      #     ref: master
-      #     path: .master
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+          path: .master
       # - id: extract-version
       #   uses: ./.master/.github/actions/extract-version
       - name: Configura usuário do Git
@@ -33,13 +33,21 @@ jobs:
           git config user.name ${{ vars.COMMIT_USER_NAME }}
           git config user.email ${{ vars.COMMIT_USER_EMAIL }}
       - name: Criando branch de correção
+        run: |
+          git branch release/v$X_VERSION
+      - name: Atualizando versão
         # env:      
         #   RELEASE_VERSION: ${{ steps.extract-version.outputs.releaseVersion }}
         #   NEXT_PATCH_VERSION: ${{ steps.extract-version.outputs.nextPatchVersion }}
         #   X_VERSION: ${{ steps.extract-version.outputs.xVersion }}
-        run: |
-          git branch release/v$X_VERSION
           # mvn -B release:update-versions -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
           # git add */pom.xml
           # git commit -m "release: iniciando próxima versão (v$NEXT_PATCH_VERSION-SNAPSHOT)"
-          git push origin release/v$X_VERSION
+      - name: Atualizando pasta .github
+        run: |
+          rm -rf .github
+          cp rf .master/.github .github
+          git add .github/*
+          git commit -m "atualizando .github a partir da master"      
+      - name: Enviando modificações
+        run: git push origin release/v$X_VERSION
