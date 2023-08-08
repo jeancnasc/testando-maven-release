@@ -25,6 +25,11 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
+      - uses: actions/checkout@v3
+        with:
+          ref: master
+          path: .master
+          token: ${{ steps.generate_token.outputs.token }}
       - id: extract-version
         uses: ./.master/.github/actions/extract-version
 
