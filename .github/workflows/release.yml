@@ -4,16 +4,8 @@ on:
   workflow_dispatch
 
 jobs:
-  extract-version:
-    uses: ./.github/workflows/extract-version.yml
   release:
     runs-on: ubuntu-latest
-    needs: extract-version
-    env:
-      RELEASE_VERSION: ${{ needs.extract-version.outputs.releaseVersion }}
-      NEXT_MINOR_VERSION: ${{ needs.extract-version.outputs.nextMinorVersion }}
-      NEXT_PATCH_VERSION: ${{ needs.extract-version.outputs.nextPatchVersion }}
-      X_VERSION: ${{ needs.extract-version.outputs.xVersion }}
     steps:
       - name: Generate a token
         id: generate_token
@@ -33,22 +25,31 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
+      - id: extract-version
+        uses: ./.master/.github/actions/extract-version
+
       - name: Configura usuário do Git
         run: |
           git config user.name ${{ vars.COMMIT_USER_NAME }}
           git config user.email ${{ vars.COMMIT_USER_EMAIL }}
 
       - name: Lançar versão e iniciar proxíma versão menor
+        env:
+          NEXT_MINOR_VERSION: ${{ steps.extract-version.outputs.nextMinorVersion }}
         if: ${{ github.ref_name == github.event.repository.default_branch }}
         run: |
           mvn -B release:prepare -DdevelopmentVersion=$NEXT_MINOR_VERSION-SNAPSHOT
 
       - name: Lançar versão e iniciar proxíma versão de correção
+        env:
+          NEXT_PATCH_VERSION: ${{ steps.extract-version.outputs.nextPatchVersion }}
         if: ${{ startsWith(github.ref_name, 'release/' )}}
         run: |
           mvn -B release:prepare -DdevelopmentVersion=$NEXT_PATCH_VERSION-SNAPSHOT
 
       - name: Push
+        env:
+          RELEASE_VERSION: ${{ steps.extract-version.outputs.releaseVersion }}
         run: |
           git push
           git push origin v$RELEASE_VERSION
