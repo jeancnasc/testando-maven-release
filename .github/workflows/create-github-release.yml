@@ -16,7 +16,7 @@ jobs:
     permissions:
       contents: write
     env:
-      TAG: ${{ inputs.tag && inputs.tag || github.ref }}
+      TAG: ${{ inputs.tag && inputs.tag || github.ref_name }}
     steps:
       - uses: bhowell2/github-substring-action@1.0.2
         id: version
