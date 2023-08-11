@@ -11,7 +11,7 @@ on:
       - 'v**.0'
 
 env:
-  TAG: ${{ inputs.tag && inputs.tag || github.github.ref_name }}
+  TAG: ${{ inputs.tag && inputs.tag || github.ref_name }}
 
 jobs:
   create-patch-branch:

@@ -14,7 +14,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      TAG: ${{ inputs.tag && inputs.tag || github.github.ref_name }}
+      TAG: ${{ inputs.tag && inputs.tag || github.ref_name }}
     permissions:
       packages: write
     
