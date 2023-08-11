@@ -25,10 +25,11 @@ jobs:
     
       
     steps:
-    - uses: actions/checkout@v3
+    - name: Obtendo o código da aplicação
+      uses: actions/checkout@v3
       with:
         ref: ${{ env.TAG }}
-    - name: Configurar JDK
+    - name: Configurando JDK
       uses: actions/setup-java@v3
       with:
         distribution: 'oracle'

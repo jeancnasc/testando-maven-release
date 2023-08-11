@@ -23,12 +23,14 @@ jobs:
     env:
       TAG: ${{ inputs.tag && inputs.tag || github.ref_name }}
     steps:
-      - uses: bhowell2/github-substring-action@1.0.2
+      - name: Extraindo versão do nome da Tag
+        uses: bhowell2/github-substring-action@1.0.2
         id: version
         with:
           value: ${{ env.TAG }}
           index_of_str: "v"
-      - uses: actions/checkout@v3
+      - name: Obtendo o código da aplicação
+        uses: actions/checkout@v3
         with:
           ref: ${{ env.TAG }}
       - name: Configurar JDK
@@ -37,17 +39,18 @@ jobs:
           distribution: 'oracle'
           java-version: '17'
           cache: 'maven'
-      - run: mkdir artifacts
-      - name: Baixar Artefatos
+      - name: Criando diretório de artefatos
+        run: mkdir artifacts
+      - name: Baixando Artefatos
         run: find -name 'pom.xml' -exec mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:\${project.packaging} -DoutputDirectory=$PWD/artifacts -f {} \;
         env:
           GITHUB_TOKEN: ${{ github.token }}
-      - name: Criar Release
+      - name: Criando Release
         id: create_release
         run: gh release create $TAG --title=$TAG --generate-notes --verify-tag
         env:
           GH_TOKEN: ${{ github.token }}
-      - name: Anexar arquivos ao Release
+      - name: Anexando arquivos ao Release
         id: upload
         run: | 
           find artifacts -name '*.jar' -exec gh release upload $TAG {} \; 
