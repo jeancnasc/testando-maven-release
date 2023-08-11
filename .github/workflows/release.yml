@@ -68,7 +68,7 @@ jobs:
       tag: ${{ needs.release.outputs.tag }}
   deploy:
     permissions: 
-      pacpackages: write
+      packages: write
     uses: ./.github/workflows/deploy.yml
     needs: [release]
     with:
