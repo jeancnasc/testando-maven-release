@@ -60,11 +60,15 @@ jobs:
     with:
       tag: ${{ needs.release.outputs.tag }}
   create-github-release:
+    permissions: 
+      contents: write
     uses: ./.github/workflows/create-github-release.yml
     needs: [release]
     with:
       tag: ${{ needs.release.outputs.tag }}
   deploy:
+    permissions: 
+      pacpackages: write
     uses: ./.github/workflows/deploy.yml
     needs: [release]
     with:
