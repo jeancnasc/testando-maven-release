@@ -22,6 +22,6 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - name: Implantando
-        run: mvn -B deploy -DaltDeploymentRepository=github:https://maven.pkg.github.com/${{github.repository}}
+        run: mvn -B deploy -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{github.repository}}
         env:
           GITHUB_TOKEN: ${{ github.token }}
