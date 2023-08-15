@@ -38,6 +38,6 @@ jobs:
     - name: Criando arquivo Release
       run: echo scm.tag=$TAG >> release.properties
     - name: Implantando
-      run: mvn -B release:perform -DconnectionUrl=scm:git:file:///\${project.basedir}
+      run: mvn -B release:perform -DconnectionUrl=scm:git:file:///\${project.basedir} -DaltDeploymentRepository=github:https://maven.pkg.github.com/${{github.repository}}
       env:
         GITHUB_TOKEN: ${{ github.token }} 
