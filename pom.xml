@@ -34,7 +34,7 @@
     
     <scm>
         <connection>scm:git:git://github.com/jeancnasc/testando-maven-release.git</connection>
-        <developerConnection>scm:git:ssh://github.com/jeancnasc/testando-maven-release.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/jeancnasc/testando-maven-release.git</developerConnection>
         <url>https://github.com/jeancnasc/testando-maven-release/tree/master</url>
         <tag>HEAD</tag>
     </scm>
