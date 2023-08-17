@@ -43,6 +43,6 @@ jobs:
     - name: Criando arquivo Release
       run: echo scm.tag=$TAG >> release.properties
     - name: Implantando
-      run: mvn -B release:perform -DconnectionUrl=scm:git:file:///\${project.basedir} -DaltDeploymentRepository=ossrh::https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DaltSnapshotDeploymentRepository=ossrh::https://oss.sonatype.org/content/repositories/snapshots
+      run: mvn -B release:perform -DconnectionUrl=scm:git:file:///\${project.basedir} -DaltDeploymentRepository=ossrh::https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ -DaltSnapshotDeploymentRepository=ossrh::https://s01.oss.sonatype.org/content/repositories/snapshots
       env:
         GITHUB_TOKEN: ${{ github.token }}
