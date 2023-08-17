@@ -35,9 +35,11 @@ jobs:
         distribution: 'oracle'
         java-version: '17'
         cache: 'maven'
+        gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
+        gpg-passphrase: ${{ secrets.PGP_PASSPHRASE }}
     - name: Criando arquivo Release
       run: echo scm.tag=$TAG >> release.properties
     - name: Implantando
       run: mvn -B release:perform -DconnectionUrl=scm:git:file:///\${project.basedir} -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{github.repository}}
       env:
-        GITHUB_TOKEN: ${{ github.token }} 
+        GITHUB_TOKEN: ${{ github.token }}
