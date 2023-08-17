@@ -10,6 +10,8 @@ on:
 jobs:
   deploy-snapshot:
     runs-on: ubuntu-latest
+    env:
+      GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}      
     permissions:
       packages: write
     steps:
@@ -22,7 +24,6 @@ jobs:
           java-version: '17'
           cache: 'maven'
           gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
-          gpg-passphrase: ${{ secrets.PGP_PASSPHRASE }}
       - name: Implantando
         run: mvn -B deploy -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }}
         env:
