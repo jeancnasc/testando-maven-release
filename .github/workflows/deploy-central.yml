@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TAG: ${{ inputs.tag && inputs.tag || github.ref_name }}
+      SERVER_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      SERVER_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
       GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
     permissions:
       packages: write
@@ -35,8 +37,8 @@ jobs:
         java-version: '17'
         cache: 'maven'
         server-id: ossrh
-        server-username: ${{ secrets.OSSRH_USERNAME }}
-        server-password: ${{ secrets.OSSRH_TOKEN }}
+        server-username: SERVER_USERNAME
+        server-password: SERVER_PASSWORD
         gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
     - name: Criando arquivo Release
       run: echo scm.tag=$TAG >> release.properties

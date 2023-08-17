@@ -11,7 +11,9 @@ jobs:
   deploy-snapshot:
     runs-on: ubuntu-latest
     env:
-      GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}      
+      SERVER_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      SERVER_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+      GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
     permissions:
       packages: write
     steps:
@@ -24,8 +26,8 @@ jobs:
           java-version: '17'
           cache: 'maven'
           server-id: ossrh
-          server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_TOKEN }}
+          server-username: SERVER_USERNAME
+          server-password: SERVER_PASSWORD
           gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
       - name: Implantando
         run: mvn -B deploy -DconnectionUrl=scm:git:file:///\${project.basedir} -DaltDeploymentRepository=ossrh::https://oss.sonatype.org/service/local/staging/deploy/maven2/ -DaltSnapshotDeploymentRepository=ossrh::https://oss.sonatype.org/content/repositories/snapshots
