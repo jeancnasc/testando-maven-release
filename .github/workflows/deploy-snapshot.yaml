@@ -1,4 +1,4 @@
-name: Implantar versão SNAPSHOT
+name: Implantar SNAPSHOT
 
 on:
   workflow_dispatch:
