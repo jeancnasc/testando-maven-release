@@ -58,6 +58,7 @@
                     <scmReleaseCommitComment>@{prefix} lançando versão @{releaseLabel}</scmReleaseCommitComment>
                     <scmDevelopmentCommitComment>@{prefix} iniciando próxima versão (v${developmentVersion})</scmDevelopmentCommitComment>
                     <branchName>v${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.x</branchName>
+                    <pushChanges>false</pushChanges>
                 </configuration>
             </plugin>
             <plugin>
