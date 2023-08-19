@@ -30,6 +30,6 @@ jobs:
           server-password: SERVER_PASSWORD
           gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
       - name: Implantando
-        run: mvn -B deploy -DconnectionUrl=scm:git:${{github.repositoryUrl}} -DaltDeploymentRepository=ossrh::https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ -DaltSnapshotDeploymentRepository=ossrh::https://s01.oss.sonatype.org/content/repositories/snapshots
+        run: mvn -B deploy -DconnectionUrl=scm:git:file:///\${project.basedir} -DaltDeploymentRepository=ossrh::https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/ -DaltSnapshotDeploymentRepository=ossrh::https://s01.oss.sonatype.org/content/repositories/snapshots
         env:
           GITHUB_TOKEN: ${{ github.token }}
