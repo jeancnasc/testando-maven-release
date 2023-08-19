@@ -56,8 +56,7 @@
                     <projectVersionPolicyId>SemVerVersionPolicy</projectVersionPolicyId>
                     <scmCommentPrefix>release:</scmCommentPrefix>
                     <scmReleaseCommitComment>@{prefix} lançando versão @{releaseLabel}</scmReleaseCommitComment>
-                    <scmDevelopmentCommitComment>@{prefix} iniciando próxima versão
-                        (v${developmentVersion})</scmDevelopmentCommitComment>
+                    <scmDevelopmentCommitComment>@{prefix} iniciando próxima versão (v${developmentVersion})</scmDevelopmentCommitComment>
                     <branchName>v${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.x</branchName>
                 </configuration>
             </plugin>
