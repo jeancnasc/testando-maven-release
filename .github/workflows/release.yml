@@ -68,22 +68,22 @@ jobs:
     outputs:
       tag: v${{ steps.extract-version.outputs.releaseVersion }}
   deploy-github-package:
-    uses: ./.github/workflows/deploy.yaml
+    uses: ./.github/workflows/deploy.yml
     needs: release
     with:
       tag: ${{ needs.release.outputs.tag }}
   deploy-central:
-    uses: ./.github/workflows/deploy-central.yaml
+    uses: ./.github/workflows/deploy-central.yml
     needs: release
     with:
       tag: ${{ needs.release.outputs.tag }}
   create-patch-branch:
-    uses: ./.github/workflows/create-patch-branch.yaml
+    uses: ./.github/workflows/create-patch-branch.yml
     needs: release
     with:
       tag: ${{ needs.release.outputs.tag }}
   create-github-release:
-    uses: ./.github/workflows/create-github-release.yaml
+    uses: ./.github/workflows/create-github-release.yml
     needs: [release,deploy-github-package]
     with:
       tag: ${{ needs.release.outputs.tag }}
