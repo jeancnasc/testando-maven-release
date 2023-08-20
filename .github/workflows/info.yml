@@ -5,6 +5,8 @@ on:
   workflow_run: 
     workflows: ["Implantar"]
     types: [completed]
+  registry_package: 
+    types: published
 jobs:
   info:
     runs-on: ubuntu-latest
