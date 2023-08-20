@@ -11,9 +11,6 @@ on:
       tag:
         required: true
         type: string
-  push:
-    tags:
-      - 'v**.0'
 
 env:
   TAG: ${{ inputs.tag && inputs.tag || github.ref_name }}

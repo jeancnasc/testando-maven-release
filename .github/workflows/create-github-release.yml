@@ -11,9 +11,6 @@ on:
       tag:
         required: true
         type: string
-  workflow_run: 
-    workflows: ["Implantar"]
-    types: [completed]
 
 jobs:
   create-github-release:

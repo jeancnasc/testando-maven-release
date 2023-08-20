@@ -65,4 +65,25 @@ jobs:
         run: |
           git push
           git push origin v$RELEASE_VERSION
-    
+    outputs:
+      tag: v${{ steps.extract-version.outputs.releaseVersion }}
+  deploy-github-package:
+    uses: ./.github/workflows/deploy.yaml
+    needs: release
+    with:
+      tag: ${{ needs.release.outputs.tag }}
+  deploy-central:
+    uses: ./.github/workflows/deploy-central.yaml
+    needs: release
+    with:
+      tag: ${{ needs.release.outputs.tag }}
+  create-patch-branch:
+    uses: ./.github/workflows/create-patch-branch.yaml
+    needs: release
+    with:
+      tag: ${{ needs.release.outputs.tag }}
+  create-github-release:
+    uses: ./.github/workflows/create-github-release.yaml
+    needs: [release,deploy-github-package]
+    with:
+      tag: ${{ needs.release.outputs.tag }}
