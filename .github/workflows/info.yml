@@ -1,8 +1,10 @@
 name: Info
 
 on:
-  workflow_dispatch
-
+  workflow_dispatch:
+  workflow_run: 
+    workflows: ["Implantar"]
+    types: [completed]
 jobs:
   info:
     runs-on: ubuntu-latest
