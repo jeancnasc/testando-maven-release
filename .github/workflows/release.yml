@@ -89,3 +89,5 @@ jobs:
     needs: [release,deploy-github-package]
     with:
       tag: ${{ needs.release.outputs.tag }}
+    permissions:
+      contents: write
