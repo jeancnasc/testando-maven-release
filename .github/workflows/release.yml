@@ -72,6 +72,8 @@ jobs:
     needs: release
     with:
       tag: ${{ needs.release.outputs.tag }}
+    permissions: 
+      packages: write
   deploy-central:
     uses: ./.github/workflows/deploy-central.yml
     needs: release
