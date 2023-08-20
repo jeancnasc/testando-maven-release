@@ -20,8 +20,6 @@ jobs:
       SERVER_USERNAME: ${{ secrets.OSSRH_USERNAME }}
       SERVER_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
       GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
-    permissions:
-      packages: write
     steps:
     - name: Obtendo o código da aplicação
       uses: actions/checkout@v3
