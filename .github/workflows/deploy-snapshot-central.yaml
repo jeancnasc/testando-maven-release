@@ -3,7 +3,7 @@ name: Implantar SNAPSHOT no Sonatype
 on:
   workflow_dispatch:
   workflow_run: 
-    workflows: Teste
+    workflows: Testar
     types: completed
     branches: 
       - 'master'
