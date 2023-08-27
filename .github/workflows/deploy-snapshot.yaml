@@ -2,8 +2,10 @@ name: Implantar SNAPSHOT
 
 on:
   workflow_dispatch:
-  push:
-    branches:
+  workflow_run: 
+    workflows: Teste
+    types: completed
+    branches: 
       - 'master'
       - 'release/**'
 
