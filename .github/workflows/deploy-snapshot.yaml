@@ -25,6 +25,6 @@ jobs:
           cache: 'maven'
           gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
       - name: Implantando
-        run: mvn -B deploy -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }}
+        run: mvn -B deploy -Prelease -DaltDeploymentRepository=github::https://maven.pkg.github.com/${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
