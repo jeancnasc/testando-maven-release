@@ -2,14 +2,27 @@ name: Implantar SNAPSHOT no Sonatype
 
 on:
   workflow_dispatch:
-  workflow_run: 
-    workflows: Testar
-    types: completed
+  push: 
     branches: 
       - 'master'
       - 'release/**'
 
 jobs:
+  make-cache:
+    runs-on: ubuntu-latest
+    concurrency: ${{ github.ref }}
+    steps:
+      - name: Obtendo o código da aplicação
+        uses: actions/checkout@v3
+      - name: Configurar JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '17'
+          cache: 'maven'
+      - name: Obtendo dependências 
+        run: mvn dependency:go-offline
+
   deploy-snapshot:
     runs-on: ubuntu-latest
     env:
