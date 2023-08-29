@@ -23,7 +23,7 @@ jobs:
           cache: 'maven'
       - name: Obtendo dependências 
         if: steps.setup.outputs.cache-hit != 'true'
-        run: mvn dependency:go-offline --non-recursive
+        run: mvn dependency:go-offline
 
   testing:
     needs: cache
