@@ -22,7 +22,7 @@ jobs:
           java-version: '17'
           cache: 'maven'
       - name: Obtendo dependências 
-        if: ${{ !steps.setup.outputs.cache-hit }}
+        if: steps.setup.outputs.cache-hit != 'true'
         run: mvn dependency:go-offline --non-recursive
 
   testing:
