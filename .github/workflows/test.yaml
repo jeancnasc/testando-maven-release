@@ -8,22 +8,25 @@ on:
     - '**'
 
 jobs:
-  make-cache:
+  cache:
     runs-on: ubuntu-latest
     concurrency: ${{ github.ref }}
     steps:
       - name: Obtendo o código da aplicação
         uses: actions/checkout@v3
-      - name: Configurar JDK
+      - id: setup
+        name: Configurar JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'oracle'
           java-version: '17'
           cache: 'maven'
       - name: Obtendo dependências 
+        if: ${{ !steps.setup.outputs.cache-hit }}
         run: mvn dependency:go-offline
 
   testing:
+    needs: cache
     runs-on: ubuntu-latest
     env:
       GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
