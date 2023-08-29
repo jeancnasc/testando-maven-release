@@ -8,31 +8,20 @@ on:
       - 'release/**'
 
 jobs:
-  cache:
-    runs-on: ubuntu-latest
-    concurrency: ${{ github.ref }}
-    steps:
-      - name: Obtendo o código da aplicação
-        uses: actions/checkout@v3
-      - id: setup
-        name: Configurar JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: '17'
-          cache: 'maven'
-      - name: Obtendo dependências 
-        if: steps.setup.outputs.cache-hit != 'true'
-        run: mvn dependency:go-offline
-        
-  deploy-snapshot:
-    needs: cache
+  deploy-snapshot:  
     runs-on: ubuntu-latest
     env:
       GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}      
     permissions:
       packages: write
     steps:
+      - name: Aguardando Teste
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: testing
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
       - name: Obtendo o código da aplicação
         uses: actions/checkout@v3
       - name: Configurando JDK

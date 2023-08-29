@@ -8,9 +8,11 @@ on:
     - '**'
 
 jobs:
-  cache:
+  testing:
+    name: testing
     runs-on: ubuntu-latest
-    concurrency: ${{ github.ref }}
+    env:
+      GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
     steps:
       - name: Obtendo o código da aplicação
         uses: actions/checkout@v3
@@ -21,24 +23,9 @@ jobs:
           distribution: 'oracle'
           java-version: '17'
           cache: 'maven'
+          gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
       - name: Obtendo dependências 
         if: steps.setup.outputs.cache-hit != 'true'
         run: mvn dependency:go-offline
-
-  testing:
-    needs: cache
-    runs-on: ubuntu-latest
-    env:
-      GPG_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
-    steps:
-      - name: Obtendo o código da aplicação
-        uses: actions/checkout@v3
-      - name: Configurar JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'oracle'
-          java-version: '17'
-          cache: 'maven'
-          gpg-private-key: ${{ secrets.PGP_PRIVATE_KEY }}
       - name: Testando
         run: mvn -B verify
