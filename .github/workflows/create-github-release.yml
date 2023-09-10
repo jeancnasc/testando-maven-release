@@ -44,6 +44,18 @@ jobs:
         run: find -name 'pom.xml' -exec mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:\${project.packaging} -DoutputDirectory=$PWD/artifacts -f {} \;
         env:
           GITHUB_TOKEN: ${{ github.token }}
+      - name: Baixando Código Fonte
+        run: find -name 'pom.xml' -exec mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:jar:sources -DoutputDirectory=$PWD/artifacts -f {} \;
+        env:
+          GITHUB_TOKEN: ${{ github.token }}          
+      - name: Baixando Código Fonte dos Testes
+        run: find -name 'pom.xml' -exec mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:jar:test-sources -DoutputDirectory=$PWD/artifacts -f {} \;
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Baixando Javadoc
+        run: find -name 'pom.xml' -exec mvn dependency:get dependency:copy -Dartifact=\${project.groupId}:\${project.artifactId}:${{ steps.version.outputs.substring }}:jar:javadoc -DoutputDirectory=$PWD/artifacts -f {} \;
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Criando Release
         id: create_release
         run: gh release create $TAG --title=$TAG --generate-notes --verify-tag
